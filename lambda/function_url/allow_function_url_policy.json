@@ -5,7 +5,7 @@
       "Sid": "https",
       "Effect": "Allow",
       "Action": "lambda:InvokeFunctionUrl",
-      "Resource": "arn:aws:lambda:us-east-1:709964508308:function:my_public_hello_world",
+      "Resource": "arn:aws:lambda:us-east-1:XXXXXXXXXXXX:function:my_public_hello_world",
       "Condition": {
         "StringEquals": {
           "lambda:FunctionUrlAuthType": "AWS_IAM"
