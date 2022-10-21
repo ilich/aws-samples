@@ -4,4 +4,4 @@ The repository contains a collection of AWS scripts, how-tos, and snippets that 
 
 ## AWS Lambda
 
-* **cross_account_access** - How can AWS Lambda access resources in another account?
+* **function_url** - Expose AWS Lambda though Function URL
