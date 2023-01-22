@@ -1,0 +1,21 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "textract.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole",
+      "Condition": {
+        "ArnLike": {
+          "aws:SourceArn": "arn:aws:textract:*:000000000000:*"
+        },
+        "StringEquals": {
+          "aws:SourceAccount": "000000000000"
+        }
+      }
+    }
+  ]
+}
