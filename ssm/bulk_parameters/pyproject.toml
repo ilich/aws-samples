@@ -1,0 +1,27 @@
+[project]
+name = "bulk-parameters"
+version = "0.1.0"
+description = "Bulk import/export AWS SSM Parameter Store parameters via CSV"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "boto3>=1.43.24",
+    "pydantic>=2.13.4",
+    "typer>=0.26.7",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.1.0",
+    "ruff>=0.15.16",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+fix = true
+
+[tool.mypy]
+python_version = "3.13"
+ignore_missing_imports = true
+plugins = ['pydantic.mypy']
