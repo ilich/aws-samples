@@ -21,12 +21,20 @@ A CLI tool that bulk exports AWS SSM Parameter Store parameters to a CSV file, a
 | `value` | Parameter value (decrypted for `SecureString`) |
 | `type` | `String`, `StringList`, or `SecureString` |
 
+## Installation
+
+```sh
+uv tool install .
+```
+
+After installation the `ssm-bulk` command is available globally. To upgrade after pulling new changes, re-run the same command.
+
 ## Usage
 
 ### pull
 
 ```sh
-uv run python -m app.main pull PREFIX [--file parameters.csv] [--profile PROFILE] [--region REGION]
+ssm-bulk pull PREFIX [--file parameters.csv] [--profile PROFILE] [--region REGION]
 ```
 
 | Argument / option | Description |
@@ -39,7 +47,7 @@ uv run python -m app.main pull PREFIX [--file parameters.csv] [--profile PROFILE
 ### push
 
 ```sh
-uv run python -m app.main push [--file parameters.csv] [--profile PROFILE] [--region REGION] [--dry-run]
+ssm-bulk push [--file parameters.csv] [--profile PROFILE] [--region REGION] [--dry-run]
 ```
 
 | Option | Description |
@@ -53,19 +61,19 @@ uv run python -m app.main push [--file parameters.csv] [--profile PROFILE] [--re
 
 ```sh
 # Export all parameters under /my-app/ to my-app.csv
-uv run python -m app.main pull /my-app/ --profile dev --region us-east-1 --file my-app.csv
+ssm-bulk pull /my-app/ --profile dev --region us-east-1 --file my-app.csv
 
 # Preview what would be imported (no changes made)
-uv run python -m app.main push --profile dev --region us-east-1 --file my-app.csv --dry-run
+ssm-bulk push --profile dev --region us-east-1 --file my-app.csv --dry-run
 
 # Import parameters from a CSV file, creating or updating them in SSM
-uv run python -m app.main push --profile dev --region us-east-1 --file my-app.csv
+ssm-bulk push --profile dev --region us-east-1 --file my-app.csv
 ```
 
-## Running locally
+## Development
 
 ```sh
-make install   # uv sync
-make run       # show CLI help
-make lint      # ruff format/check + mypy
+uv sync          # set up the virtual environment
+uv run ssm-bulk  # run without installing globally
+make lint        # ruff format/check + mypy
 ```

@@ -1,11 +1,8 @@
-.PHONY: install run lint
+.PHONY: install lint
 .DEFAULT_GOAL := run
 
 install:
 	uv sync
-
-run:
-	uv run python -m app.main
 
 lint:
 	uv run ruff format .

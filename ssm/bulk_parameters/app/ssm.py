@@ -2,6 +2,7 @@ from collections.abc import Iterable
 from typing import Any
 
 import boto3
+import typer
 
 from app.models import ParameterRecord, ParameterType
 
@@ -23,6 +24,9 @@ def fetch_parameters(client: Any, prefix: str) -> list[ParameterRecord]:
                     type=ParameterType(parameter["Type"]),
                 )
             )
+
+            typer.echo(f"Fetched parameter: {parameter['Name']}  ({parameter['Type']})")
+
     return records
 
 
@@ -34,3 +38,5 @@ def put_parameters(client: Any, records: Iterable[ParameterRecord]) -> None:
             Type=record.type.value,
             Overwrite=True,
         )
+
+        typer.echo(f"Put parameter: {record.name}  ({record.type})")
