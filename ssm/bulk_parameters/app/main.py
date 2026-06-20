@@ -41,6 +41,37 @@ def push(
     typer.echo(f"Wrote {len(records)} parameter(s) from {file} to SSM Parameter Store")
 
 
+@app.command()
+def merge(
+    base: Path = typer.Argument(..., help="Base CSV file path"),
+    changes: Path = typer.Argument(..., help="Changes CSV file path"),
+    output: Path = typer.Option(Path("parameters.csv"), "--output", "-o", help="Output CSV file path"),
+) -> None:
+    """Merge changes CSV into base CSV: add new, update existing, remove missing."""
+    base_records = {r.name: r for r in read_csv(base)}
+    changes_records = {r.name: r for r in read_csv(changes)}
+
+    added, updated, removed = 0, 0, 0
+    for name in changes_records.keys() - base_records.keys():
+        typer.echo(f"  add     {name}")
+        added += 1
+    for name in changes_records.keys() & base_records.keys():
+        before, after = base_records[name], changes_records[name]
+        diff = ""
+        if before.value != after.value:
+            diff += f"  {before.value!r} -> {after.value!r}"
+        if before.type != after.type:
+            diff += f"  (type: {before.type.value} -> {after.type.value})"
+        typer.echo(f"  change  {name}{diff}")
+        updated += 1
+    for name in base_records.keys() - changes_records.keys():
+        typer.echo(f"  remove  {name}")
+        removed += 1
+
+    write_csv(output, list(changes_records.values()))
+    typer.echo(f"Merged to {output}: +{added} added, ~{updated} updated, -{removed} removed")
+
+
 def main() -> None:
     app()
 
