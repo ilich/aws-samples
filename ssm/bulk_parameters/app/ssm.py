@@ -22,6 +22,7 @@ def fetch_parameters(client: Any, prefix: str) -> list[ParameterRecord]:
                     name=parameter["Name"],
                     value=parameter["Value"],
                     type=ParameterType(parameter["Type"]),
+                    keep=False,  # Default to False; user can set to True in CSV if desired
                 )
             )
 

@@ -13,3 +13,4 @@ class ParameterRecord(BaseModel):
     name: str
     value: str
     type: ParameterType
+    keep: bool = False

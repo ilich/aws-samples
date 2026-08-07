@@ -57,6 +57,12 @@ def merge(
         added += 1
     for name in changes_records.keys() & base_records.keys():
         before, after = base_records[name], changes_records[name]
+        if before.keep:
+            after.value = before.value
+            after.type = before.type
+            typer.echo(f"  keep    {name}  (keep=True, skipping update)")
+            continue
+
         diff = ""
         if before.value != after.value:
             diff += f"  {before.value!r} -> {after.value!r}"
